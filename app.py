@@ -34,10 +34,11 @@ def generate_plots(N, mu, sigma2, S):
     plt.ylabel("Y")
     plt.title(f"Regression Line: Y = {slope:.2f}X + {intercept:.2f}")
     plt.legend()
-    plt.savefig("static/plot1.png")
+    plot1_path = "static/plot1.png"
+    plt.savefig(plot1_path)
     plt.close()
 
-    plot1_path = "static/plot1.png"
+    
     # Replace the above TODO 3 block with code to generate and save the plot
     # Step 2: Run S simulations and create histograms of slopes and intercepts
 
