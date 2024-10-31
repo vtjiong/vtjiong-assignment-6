@@ -11,13 +11,12 @@ import base64
 app = Flask(__name__)
 
 def generate_plots(N, mu, sigma2, S):
-
     # STEP 1
     # TODO 1: Generate a random dataset X of size N with values between 0 and 1
     # and a random dataset Y with normal additive error (mean mu, variance sigma^2).
     # Hint: Use numpy's random's functions to generate values for X and Y
     X = np.random.rand(N)  # Replace with code to generate random values for X
-    Y = np.random.normal(mu, sigma2, N) # Replace with code to generate random values for Y with specified mean and variance
+    Y = np.random.normal(mu, np.sqrt(sigma2), N) # Replace with code to generate random values for Y with specified mean and variance
 
     # TODO 2: Fit a linear regression model to X and Y
     # Hint: Use Scikit Learn
@@ -32,13 +31,11 @@ def generate_plots(N, mu, sigma2, S):
     plt.plot(X, regression_line, color='red', label='Regression Line')
     plt.xlabel("X")
     plt.ylabel("Y")
-    plt.title(f"Regression Line: Y = {slope:.2f}X + {intercept:.2f}")
+    plt.title(f"Regression Line: Y = {intercept:.2f} + {slope:.2f}X")
     plt.legend()
     plot1_path = "static/plot1.png"
     plt.savefig(plot1_path)
     plt.close()
-
-    
     # Replace the above TODO 3 block with code to generate and save the plot
     # Step 2: Run S simulations and create histograms of slopes and intercepts
 
@@ -51,14 +48,14 @@ def generate_plots(N, mu, sigma2, S):
     # Hint: For each iteration, create random X and Y values using the provided parameters
     for _ in range(S):
         # TODO: Generate random X values with size N between 0 and 1
-        X_sim = np.random.uniform(0, 1, N)   # Replace with code to generate X values
+        X_sim = np.random.rand(N)   # Replace with code to generate X values
 
         # TODO: Generate Y values with normal additive error (mean mu, variance sigma^2)
-        Y_sim = mu * X_sim + np.random.normal(0, sigma2, N)  # Replace with code to generate Y values
+        Y_sim = np.random.normal(mu, np.sqrt(sigma2), N)  # Replace with code to generate Y values
 
         # TODO: Fit a linear regression model to X_sim and Y_sim
         sim_model = sklearn.linear_model.LinearRegression() # Initialize model
-        sim_model.fit(X_sim.reshape(-1,1),Y_sim)# Replace with code to fit model
+        sim_model.fit(X_sim.reshape(-1, 1), Y_sim)# Replace with code to fit model
 
         # TODO: Append the slope and intercept of the model to slopes and intercepts lists
         slopes.append(sim_model.coef_[0])  # Replace None with code to append slope
